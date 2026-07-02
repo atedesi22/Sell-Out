@@ -1,0 +1,45 @@
+/* sell-out-frontend/
+├── public/
+│   ├── favicon.ico
+│   ├── logo192.png
+│   ├── logo512.png
+│   ├── manifest.json          # Configuration PWA cruciale pour le Store NovaVerse
+│   └── sw.js                  # Service Worker de base pour le mode offline
+├── src/
+│   ├── assets/                # Ressources statiques
+│   │   ├── images/
+│   │   └── icons/
+│   ├── components/            # Composants globaux et réutilisables (UI Atomique)
+│   │   ├── ui/
+│   │   │   ├── Button.jsx
+│   │   │   ├── Input.jsx
+│   │   │   └── Card.jsx
+│   │   ├── layout/
+│   │   │   ├── Header.jsx
+│   │   │   └── MobileNav.jsx
+│   │   └── pwa/
+│   │       └── PWAInstallPrompt.jsx
+│   ├── config/                # Configurations et constantes globales
+│   │   └── constants.js
+│   ├── context/               # Gestion d'état globale (Auth, Thème)
+│   │   └── AuthContext.jsx
+│   ├── hooks/                 # Hooks personnalisés (PWA, API, OTP)
+│   │   ├── useAuth.js
+│   │   └── usePWA.js
+│   ├── pages/                 # Écrans principaux de l'application
+│   │   ├── auth/
+│   │   │   └── Login.jsx      # Notre focus du Jour 1 (Connexion / OTP / NovaVerse)
+│   │   ├── dashboard/
+│   │   ├── marketplace/
+│   │   └── wallet/            # Interface pour MoMo & Orange Money
+│   ├── routes/                # Gestion de la navigation
+│   │   └── AppRoutes.jsx
+│   ├── services/              # Appels API (Laravel Backend)
+│   │   └── api.js
+│   ├── styles/                # Styles globaux
+│   │   └── index.css          # Directives Tailwind
+│   ├── App.jsx                # Composant Racine
+│   └── main.jsx               # Point d'entrée de l'application + Registre Service Worker
+├── package.json
+├── vite.config.js             # Configuration Vite + Plugin PWA
+└── tailwind.config.js         # Configuration de la charte graphique */
