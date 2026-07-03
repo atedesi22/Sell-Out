@@ -7,6 +7,7 @@ import {
   Truck, PlusCircle, CheckCircle, Flame, Megaphone, Bike, X, Sparkles, 
   ShieldCheck, ShoppingBag, Layers
 } from 'lucide-react';
+import MainFeed from './MainFeed';
 
 export default function Home() {
   // --- 1. DATA SIMULÉE (Placée ici pour être accessible partout) ---
@@ -90,17 +91,17 @@ export default function Home() {
   }, [showNovaAd, adCountdown]);
 
   return (
-    <div className="min-h-screen bg-white pb-28 text-slate-950 font-sans antialiased w-full relative overflow-x-hidden">
+    <div className="relative w-full min-h-screen overflow-x-hidden font-sans antialiased bg-white pb-28 text-slate-950">
       
       {/* HEADER ADAPTATIF */}
-      <header className="bg-white px-4 md:px-8 pt-6 pb-4 border-b border-slate-100 sticky top-0 z-40 shadow-sm">
-         <div className="max-w-7xl mx-auto flex flex-col gap-4">
-           <div className="flex justify-between items-center">
+      <header className="sticky top-0 z-40 px-4 pt-6 pb-4 bg-white border-b shadow-sm md:px-8 border-slate-100">
+         <div className="flex flex-col gap-4 mx-auto max-w-7xl">
+           <div className="flex items-center justify-between">
              <div className="flex items-center gap-2">
                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0046FF] to-indigo-600 text-white flex items-center justify-center font-black text-sm">
                  SO
                </div>
-               <span className="text-xl font-black text-slate-900 tracking-tight">
+               <span className="text-xl font-black tracking-tight text-slate-900">
                  Sell <span className="text-[#FF6B00]">Out</span>
                </span>
              </div>
@@ -114,13 +115,13 @@ export default function Home() {
            {/* Input de recherche */}
            <div className="flex gap-2">
              <div className="relative flex-1 flex items-center bg-slate-100 rounded-xl border border-slate-200/50 focus-within:border-[#0046FF]/30 focus-within:bg-white focus-within:ring-4 focus-within:ring-[#0046FF]/5 transition-all">
-               <Search className="w-5 h-5 text-slate-400 absolute left-4 pointer-events-none" />
+               <Search className="absolute w-5 h-5 pointer-events-none text-slate-400 left-4" />
                <input
                  type="text"
                  placeholder="Que recherchez-vous aujourd'hui ?"
                  value={searchQuery}
                  onChange={(e) => setSearchQuery(e.target.value)}
-                 className="w-full bg-transparent pl-12 pr-4 py-3 text-sm font-semibold text-slate-800 placeholder:text-slate-400 outline-none"
+                 className="w-full py-3 pl-12 pr-4 text-sm font-semibold bg-transparent outline-none text-slate-800 placeholder:text-slate-400"
                />
              </div>
              <button className="bg-[#0046FF] text-white p-3 rounded-xl active:scale-95 transition-transform shadow-md shadow-[#0046FF]/10">
@@ -131,20 +132,20 @@ export default function Home() {
        </header>
 
       {/* MULTI-COLUMNS RESPONSIVE GRID */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-4 md:px-6">
+      <div className="grid grid-cols-1 gap-6 px-4 lg:grid-cols-3 md:px-6">
 
         {/* COLONNE DROITE : Actions Métiers, Recrutements, Logistique */}
         <div className="space-y-6">
           {/* SECTION CRÉATION MULTI-BOUTIQUES */}
           <section>
-             <div className="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-5 text-white shadow-md relative overflow-hidden border border-white/5">
+             <div className="relative p-5 overflow-hidden text-white border shadow-md bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl border-white/5">
                <div className="absolute right-[-10px] bottom-[-10px] text-6xl opacity-10">🏬</div>
                <div className="max-w-[85%]">
                  <span className="bg-[#FF6B00] text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">
                    Opportunité Business
                  </span>
-                 <h3 className="font-black text-base mt-2 leading-snug">Digitalisez votre commerce physique dès aujourd'hui</h3>
-                 <p className="text-slate-300 text-xs mt-1 font-medium">Créez vos boutiques en 2 minutes et encaissez par MoMo & OM.</p>
+                 <h3 className="mt-2 text-base font-black leading-snug">Digitalisez votre commerce physique dès aujourd'hui</h3>
+                 <p className="mt-1 text-xs font-medium text-slate-300">Créez vos boutiques en 2 minutes et encaissez par MoMo & OM.</p>
                </div>
                <button className="mt-4 w-full bg-[#FF6B00] text-white text-xs font-extrabold py-3 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-[#FF6B00]/20 active:scale-[0.98] transition-transform">
                  <PlusCircle className="w-4 h-4" /> Ouvrir ma boutique gratuite
@@ -154,7 +155,7 @@ export default function Home() {
 
           {/* SECTION ECOSYSTÈME DEMANDES B2B & GROUPAGES LIVE */}
             <section className="space-y-3">
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
                 <h2 className="text-base font-black text-slate-900 flex items-center gap-1.5">
                 <Layers className="w-4 h-4 text-[#FF6B00]" /> Demandes & Groupages Gros
                 </h2>
@@ -165,8 +166,8 @@ export default function Home() {
 
             <div className="space-y-2.5">
                 {b2bDemands.map((demand) => (
-                <div key={demand.id} className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:border-slate-200 transition-all">
-                    <div className="flex justify-between items-start gap-2">
+                <div key={demand.id} className="p-4 transition-all bg-white border shadow-sm rounded-2xl border-slate-100 hover:border-slate-200">
+                    <div className="flex items-start justify-between gap-2">
                     <div className="flex items-start gap-2.5">
                         <div className={`p-2 rounded-xl text-xs font-black shrink-0 ${
                         demand.type === "Groupage" 
@@ -176,7 +177,7 @@ export default function Home() {
                         {demand.type === "Groupage" ? "📦 GROUP" : "💼 COTE"}
                         </div>
                         <div>
-                        <h4 className="text-xs font-black text-slate-800 leading-tight">
+                        <h4 className="text-xs font-black leading-tight text-slate-800">
                             {demand.type === "Groupage" ? demand.target : demand.item}
                         </h4>
                         <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
@@ -205,7 +206,7 @@ export default function Home() {
                         <span>Remplissage</span>
                         <span className="text-slate-600">{demand.progress}%</span>
                         </div>
-                        <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
+                        <div className="w-full h-1 overflow-hidden rounded-full bg-slate-100">
                         <div 
                             className="h-full bg-gradient-to-r from-[#0046FF] to-emerald-500" 
                             style={{ width: `${demand.progress}%` }}
@@ -242,13 +243,19 @@ export default function Home() {
             </div>
             </section>
         </div>
+
+        {/* COLONNE CENTRALE : LE FLUX PRINCIPAL B2B (Jour 3) */}
+          <main className="order-1 col-span-1 lg:col-span-8 lg:order-1">
+            
+            <MainFeed />
+          </main>
         
         {/* COLONNE GAUCHE : Flux des Ventes, Pubs et Boutiques */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="space-y-6 lg:col-span-2">
           
           {/* BANNIÈRES PUBLICITAIRES */}
-          <section className="relative overflow-hidden rounded-3xl shadow-lg">
-            <div className="flex md:hidden overflow-x-auto gap-4 snap-x snap-mandatory scrollbar-none pb-1">
+          <section className="relative overflow-hidden shadow-lg rounded-3xl">
+            <div className="flex gap-4 pb-1 overflow-x-auto md:hidden snap-x snap-mandatory scrollbar-none">
               {adsBanners.map((ad) => (
                 <div key={ad.id} className={`${ad.bg} min-w-[100%] snap-center rounded-3xl p-5 text-white flex flex-col justify-between relative min-h-[160px]`}>
                     
@@ -256,15 +263,15 @@ export default function Home() {
                     <Megaphone className="w-2.5 h-2.5" /> {ad.badge}
                   </span>
                   <div className="mt-4">
-                    <h3 className="font-black text-lg leading-tight">{ad.title}</h3>
-                    <p className="text-xs text-white/80 mt-1">{ad.subtitle}</p>
+                    <h3 className="text-lg font-black leading-tight">{ad.title}</h3>
+                    <p className="mt-1 text-xs text-white/80">{ad.subtitle}</p>
                   </div>
                   {ad.isPromoteCTA ? (
-                    <button onClick={() => alert("Formulaire de régie pub")} className="mt-4 w-full bg-slate-900 text-white text-xs font-black py-3 rounded-xl flex items-center justify-center gap-1 active:scale-95 transition-transform border border-white/10">
+                    <button onClick={() => alert("Formulaire de régie pub")} className="flex items-center justify-center w-full gap-1 py-3 mt-4 text-xs font-black text-white transition-transform border bg-slate-900 rounded-xl active:scale-95 border-white/10">
                       Placer votre publicité <ArrowRight className="w-3.5 h-3.5 ml-1" />
                     </button>
                   ) : (
-                    <button className="mt-4 w-fit bg-white text-slate-900 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1 active:scale-95 transition-transform">
+                    <button className="flex items-center gap-1 px-4 py-2 mt-4 text-xs font-bold transition-transform bg-white w-fit text-slate-900 rounded-xl active:scale-95">
                       Découvrir <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   )}
@@ -287,12 +294,12 @@ export default function Home() {
                   </span>
                   
                   <div className="max-w-xl mt-2">
-                    <h3 className="font-black text-xl lg:text-2xl leading-tight">{adsBanners[currentAdIndex].title}</h3>
+                    <h3 className="text-xl font-black leading-tight lg:text-2xl">{adsBanners[currentAdIndex].title}</h3>
                     <p className="text-sm text-white/80 mt-1.5">{adsBanners[currentAdIndex].subtitle}</p>
                   </div>
 
                   {adsBanners[currentAdIndex].isPromoteCTA ? (
-                    <button onClick={() => alert("Formulaire de régie pub")} className="mt-4 w-fit bg-white text-slate-900 text-xs font-black py-3 px-6 rounded-xl flex items-center gap-2 hover:bg-slate-800 transition-colors border border-white/10">
+                    <button onClick={() => alert("Formulaire de régie pub")} className="flex items-center gap-2 px-6 py-3 mt-4 text-xs font-black transition-colors bg-white border w-fit text-slate-900 rounded-xl hover:bg-slate-800 border-white/10">
                       Placer votre publicité <ArrowRight className="w-4 h-4" />
                     </button>
                   ) : (
@@ -319,17 +326,17 @@ export default function Home() {
 
           {/* MEILLEURES BOUTIQUES */}
           <section>
-            <div className="flex justify-between items-center mb-3">
+            <div className="flex items-center justify-between mb-3">
               <h2 className="text-base font-black text-slate-900 flex items-center gap-1.5">
                 <Store className="w-4 h-4 text-[#0046FF]" /> Boutiques Certifiées
               </h2>
               <span className="text-xs font-bold text-[#0046FF] cursor-pointer">Voir tout</span>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
               {topShops.map((shop) => (
-                <div key={shop.id} className="bg-white border border-slate-100 p-4 rounded-2xl shadow-sm flex flex-col items-center text-center relative hover:border-slate-200 transition-colors">
-                  <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-xl mb-2">{shop.avatar}</div>
-                  <h3 className="text-xs font-black text-slate-800 line-clamp-1 flex items-center gap-1">
+                <div key={shop.id} className="relative flex flex-col items-center p-4 text-center transition-colors bg-white border shadow-sm border-slate-100 rounded-2xl hover:border-slate-200">
+                  <div className="flex items-center justify-center w-12 h-12 mb-2 text-xl rounded-2xl bg-slate-100">{shop.avatar}</div>
+                  <h3 className="flex items-center gap-1 text-xs font-black text-slate-800 line-clamp-1">
                     {shop.name} {shop.verified && <CheckCircle className="w-3 h-3 text-emerald-500 fill-emerald-500" />}
                   </h3>
                   <p className="text-[10px] text-slate-400 font-semibold mt-0.5">{shop.location}</p>
@@ -344,25 +351,25 @@ export default function Home() {
 
           {/* MEILLEURES VENTES */}
           <section>
-            <div className="flex justify-between items-center mb-3">
+            <div className="flex items-center justify-between mb-3">
               <h2 className="text-base font-black text-slate-900 flex items-center gap-1.5">
                 <Flame className="w-4 h-4 text-rose-500" /> Les Meilleures Ventes
               </h2>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
               {topProducts.map((product) => (
-                <div key={product.id} className="bg-white rounded-2xl p-3 border border-slate-100 shadow-sm flex flex-col justify-between hover:border-slate-200 transition-colors">
+                <div key={product.id} className="flex flex-col justify-between p-3 transition-colors bg-white border shadow-sm rounded-2xl border-slate-100 hover:border-slate-200">
                   <div>
-                    <div className="w-full aspect-square bg-slate-50 rounded-xl mb-2 flex items-center justify-center text-3xl relative shadow-inner">
+                    <div className="relative flex items-center justify-center w-full mb-2 text-3xl shadow-inner aspect-square bg-slate-50 rounded-xl">
                       <span className="absolute top-2 left-2 bg-rose-500 text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded">
                         {product.label}
                       </span>
                       {product.image}
                     </div>
-                    <h3 className="text-xs font-bold text-slate-800 line-clamp-2 leading-tight">{product.title}</h3>
+                    <h3 className="text-xs font-bold leading-tight text-slate-800 line-clamp-2">{product.title}</h3>
                     <p className="text-[10px] text-[#0046FF] font-bold mt-1">Par: {product.shop}</p>
                   </div>
-                  <div className="mt-3 pt-2 border-t border-slate-50 flex justify-between items-center">
+                  <div className="flex items-center justify-between pt-2 mt-3 border-t border-slate-50">
                     <span className="text-xs font-black text-slate-900">{product.price}</span>
                     <span className="text-[8px] bg-amber-100 text-amber-700 font-extrabold px-1.5 py-0.5 rounded">
                       {product.badge}
@@ -378,7 +385,7 @@ export default function Home() {
       </div>
 
       {/* FOOTER PARTENAIRES */}
-      <section className="mt-12 px-4 text-center">
+      <section className="px-4 mt-12 text-center">
         <p className="text-[10px] uppercase tracking-wider font-bold text-slate-400">Partenaires Fintech Intégrés</p>
         <div className="flex justify-center items-center gap-6 mt-3 opacity-40 grayscale contrast-200 text-[11px] font-black">
           <span>MTN MoMo</span>
@@ -396,14 +403,14 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-slate-950 flex flex-col justify-between p-6 lg:p-12 overflow-y-auto"
+            className="fixed inset-0 z-50 flex flex-col justify-between p-6 overflow-y-auto bg-slate-950 lg:p-12"
           >
             {/* Background spatial abstrait subtil */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,70,255,0.15),transparent_40%)] pointer-events-none" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(255,107,0,0.1),transparent_40%)] pointer-events-none" />
 
             {/* Topbar Pub */}
-            <div className="flex justify-between items-center w-full max-w-5xl mx-auto relative z-10">
+            <div className="relative z-10 flex items-center justify-between w-full max-w-5xl mx-auto">
               <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full backdrop-blur-md">
                 <div className="w-4 h-4 rounded bg-gradient-to-r from-[#0046FF] to-violet-600 flex items-center justify-center text-[8px] font-black text-white">N</div>
                 <span className="text-[10px] text-slate-300 font-black tracking-wider uppercase">NovaVerse Ad-Network (Premium)</span>
@@ -421,7 +428,7 @@ export default function Home() {
             </div>
 
             {/* Corps Elargi de l'annonce */}
-            <div className="flex flex-col items-center text-center my-auto space-y-8 px-4 max-w-2xl mx-auto relative z-10 w-full">
+            <div className="relative z-10 flex flex-col items-center w-full max-w-2xl px-4 mx-auto my-auto space-y-8 text-center">
               {/* Grand Badge NovaVerse Évolutif */}
               <motion.div 
                 initial={{ scale: 0.9, y: 30 }}
@@ -442,26 +449,26 @@ export default function Home() {
                   <Sparkles className="w-3.5 h-3.5 fill-[#FF6B00]" /> Déploiement Écosystème
                 </span>
                 
-                <h2 className="text-3xl lg:text-5xl font-black text-white tracking-tight leading-none">
+                <h2 className="text-3xl font-black leading-none tracking-tight text-white lg:text-5xl">
                   L'univers <span className="text-[#0046FF] bg-gradient-to-r from-[#0046FF] to-violet-400 bg-clip-text text-transparent">NovaMap</span> arrive
                 </h2>
                 
-                <p className="text-sm lg:text-base text-slate-400 font-medium leading-relaxed max-w-xl">
+                <p className="max-w-xl text-sm font-medium leading-relaxed lg:text-base text-slate-400">
                   Ne restez plus jamais isolé au Cameroun. Partagez vos instants éphémères géolocalisés, basculez en mode connexion discrète et vivez des interactions ultra-fluides, sans compromis sur la sécurité.
                 </p>
               </div>
 
               {/* Grille des fonctionnalités clefs intégrées à la pub */}
-              <div className="grid grid-cols-3 gap-3 w-full max-w-md pt-2">
-                <div className="bg-white/5 border border-white/5 rounded-2xl p-3 flex flex-col items-center">
+              <div className="grid w-full max-w-md grid-cols-3 gap-3 pt-2">
+                <div className="flex flex-col items-center p-3 border bg-white/5 border-white/5 rounded-2xl">
                   <ShoppingBag className="w-5 h-5 text-[#0046FF] mb-1" />
                   <span className="text-[10px] text-slate-300 font-bold">Social First</span>
                 </div>
-                <div className="bg-white/5 border border-white/5 rounded-2xl p-3 flex flex-col items-center">
-                  <ShieldCheck className="w-5 h-5 text-emerald-500 mb-1" />
+                <div className="flex flex-col items-center p-3 border bg-white/5 border-white/5 rounded-2xl">
+                  <ShieldCheck className="w-5 h-5 mb-1 text-emerald-500" />
                   <span className="text-[10px] text-slate-300 font-bold">NovaDonnées</span>
                 </div>
-                <div className="bg-white/5 border border-white/5 rounded-2xl p-3 flex flex-col items-center">
+                <div className="flex flex-col items-center p-3 border bg-white/5 border-white/5 rounded-2xl">
                   <Layers className="w-5 h-5 text-[#FF6B00] mb-1" />
                   <span className="text-[10px] text-slate-300 font-bold">Instants Live</span>
                 </div>
@@ -479,7 +486,7 @@ export default function Home() {
             </div>
 
             {/* CTA d'action Elargi */}
-            <div className="space-y-4 w-full max-w-md mx-auto relative z-10 pt-4">
+            <div className="relative z-10 w-full max-w-md pt-4 mx-auto space-y-4">
               <button 
                 onClick={() => {
                   alert("Redirection sécurisée vers l'environnement NovaMap !");
