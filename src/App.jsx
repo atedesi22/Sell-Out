@@ -18,7 +18,7 @@ export default function App() {
   return (
     <AnimatePresence mode="wait">
       {loading ? (
-        <Preloader key="preloader" />
+        <Preloader isLoading={loading} key="preloader" />
       ) : (
         <div className="bg-slate-900 min-h-screen">
         {activeTab === 'home' && <Home />}
