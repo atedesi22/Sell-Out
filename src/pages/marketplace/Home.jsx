@@ -95,23 +95,37 @@ export default function Home() {
 
   // Déclenchement automatique de la pub NovaVerse après 15 secondes de navigation
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const initialTimer = setTimeout(() => {
       setShowNovaAd(true);
     }, 15000);
-    return () => clearTimeout(timer);
+    // Boucle infinie : Relance la pub toutes les 5 minutes (300 000 ms)
+    const recurrentInterval = setInterval(() => {
+      // On réinitialise le compte à rebours interne de la pub avant de l'afficher
+      setCountdown(5);
+      setCanCloseAd(false);
+      setShowNovaAd(true);
+    }, 300000); 
+
+    // Nettoyage des timers si l'utilisateur change de page
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(recurrentInterval);
+    };
   }, []);
 
-  // Compte à rebours de la pub NovaVerse
+  // 2. Gestion du compte à rebours de 5 secondes (Non-passable) lorsque la pub est visible
   useEffect(() => {
-    let interval;
+    let countdownInterval;
+    
     if (showNovaAd && adCountdown > 0) {
-      interval = setInterval(() => {
+      countdownInterval = setInterval(() => {
         setCountdown((prev) => prev - 1);
       }, 1000);
     } else if (adCountdown === 0) {
       setCanCloseAd(true);
     }
-    return () => clearInterval(interval);
+
+    return () => clearInterval(countdownInterval);
   }, [showNovaAd, adCountdown]);
 
   // 1. Data Bannières Publicitaires (Monétisation)
@@ -258,7 +272,7 @@ export default function Home() {
       <section className="mt-6 px-4 space-y-3">
         <div className="flex justify-between items-center">
           <h2 className="text-base font-black text-slate-900 flex items-center gap-1.5">
-            <Truck className="w-4 h-4 text-brand-orange" /> Logistique Collaborative
+            <Truck className="w-4 h-4 text-[#FF6B00]" /> Logistique Collaborative
           </h2>
         </div>
 
@@ -274,7 +288,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-xs font-black text-brand-blue block">{req.price}</span>
+                <span className="text-xs font-black text-[#0046FF] block">{req.price}</span>
               </div>
             </div>
           ))}
@@ -353,7 +367,7 @@ export default function Home() {
             {/* Top Bar de la Publicité */}
             <div className="flex justify-between items-center w-full">
               <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full backdrop-blur-md">
-                <div className="w-4 h-4 rounded bg-brand-blue flex items-center justify-center text-[8px] font-black text-white">N</div>
+                <div className="w-4 h-4 rounded bg-[#0046FF] flex items-center justify-center text-[8px] font-black text-white">N</div>
                 <span className="text-[10px] text-slate-300 font-black tracking-wider uppercase">NovaVerse Ad-Network</span>
               </div>
               
@@ -374,22 +388,22 @@ export default function Home() {
               <motion.div 
                 initial={{ scale: 0.9, y: 20 }}
                 animate={{ scale: 1, y: 0 }}
-                className="w-24 h-24 rounded-3xl bg-gradient-to-tr from-brand-blue to-violet-600 flex items-center justify-center text-4xl shadow-2xl shadow-brand-blue/30 text-white font-black relative"
+                className="w-24 h-24 rounded-3xl bg-gradient-to-tr from-[#0046FF] to-violet-600 flex items-center justify-center text-4xl shadow-2xl shadow-[#0046FF]/30 text-white font-black relative"
               >
                 N
                 <motion.div 
                   animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0, 0.3] }}
                   transition={{ repeat: Infinity, duration: 2 }}
-                  className="absolute inset-0 rounded-3xl border-2 border-brand-blue"
+                  className="absolute inset-0 rounded-3xl border-2 border-[#0046FF]"
                 />
               </motion.div>
 
               <div className="space-y-2">
-                <span className="inline-flex items-center gap-1 bg-brand-orange/20 text-brand-orange border border-brand-orange/30 text-[9px] font-black tracking-widest uppercase px-2.5 py-1 rounded-md">
-                  <Sparkles className="w-3 h-3 fill-brand-orange" /> Nouveau Module Live
+                <span className="inline-flex items-center gap-1 bg-[#FF6B00]/20 text-[#FF6B00] border border-[#FF6B00]/30 text-[9px] font-black tracking-widest uppercase px-2.5 py-1 rounded-md">
+                  <Sparkles className="w-3 h-3 fill-[#FF6B00]" /> Nouveau Module Live
                 </span>
                 <h2 className="text-2xl font-black text-white tracking-tight leading-tight">
-                  Découvrez <span className="text-brand-blue">NovaMap</span>
+                  Découvrez <span className="text-[#0046FF]">NovaMap</span>
                 </h2>
                 <p className="text-xs text-slate-400 font-medium leading-relaxed">
                   Ne restez plus jamais seul. Partagez vos instants éphémères géolocalisés à Douala & Yaoundé, créez des vibrations réelles et connectez-vous avec fluidité avec vos proches sans aucune friction.
@@ -402,7 +416,7 @@ export default function Home() {
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
                   transition={{ duration: 15, ease: "linear" }}
-                  className="h-full bg-gradient-to-r from-brand-blue to-brand-orange"
+                  className="h-full bg-gradient-to-r from-[#0046FF] to-[#FF6B00]"
                 />
               </div>
             </div>
@@ -414,7 +428,7 @@ export default function Home() {
                   alert("Redirection sécurisée vers la PWA NovaMap et capture sécurisée via NovaDonnées !");
                   setShowNovaAd(false);
                 }}
-                className="w-full bg-gradient-to-r from-brand-blue to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-xl shadow-brand-blue/20 transition-transform active:scale-[0.98]"
+                className="w-full bg-gradient-to-r from-[#0046FF] to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-xl shadow-[#0046FF]/20 transition-transform active:scale-[0.98]"
               >
                 Explorer NovaMap maintenant
                 <ArrowRight className="w-4 h-4" />
