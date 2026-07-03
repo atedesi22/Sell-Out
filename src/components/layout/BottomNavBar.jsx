@@ -103,7 +103,7 @@ export default function BottomNavBar({ activeTab, setActiveTab }) {
         <div className="hidden md:block w-[1px] h-8 bg-slate-300 dark:bg-slate-700 self-center mx-1" />
 
         {/* Bouton Raccourci NovaVerse Apps (Multi-modules) */}
-        <button 
+        {/* <button 
           onClick={() => alert("Ouverture du tiroir de modules NovaVerse")}
           className="relative group flex flex-col items-center justify-center p-2 rounded-2xl outline-none"
         >
@@ -117,7 +117,7 @@ export default function BottomNavBar({ activeTab, setActiveTab }) {
           <span className="hidden md:block absolute -top-10 scale-0 group-hover:scale-100 bg-slate-950/80 text-white font-bold text-[10px] tracking-wide uppercase px-2.5 py-1 rounded-md border border-white/10 transition-all duration-200 origin-bottom pointer-events-none">
             NovaModules
           </span>
-        </button>
+        </button> */}
 
       </motion.nav>
     </div>

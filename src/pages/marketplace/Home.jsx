@@ -21,10 +21,11 @@ export default function Home() {
     { id: 3, name: "Bando Électro Center", location: "Marché Central", rating: 4.7, sales: 185, avatar: "⚡", verified: false },
   ];
 
-  const deliveryRequests = [
-    { id: 1, from: "Bonapriso", to: "Logbessou", package: "Colis Vêtements", status: "En attente", price: "1,500 XAF" },
-    { id: 2, from: "Mokolo", to: "Bastos", package: "Écran PC Gamer", status: "Urgent", price: "2,500 XAF" },
-  ];
+  const b2bDemands = [
+  { id: 1, type: "Groupage", target: "Écrans PC Gamer", progress: 75, remaining: "2 places", savings: "-25%", status: "Presque complet" },
+  { id: 2, type: "Cotation", user: "Grossiste Marché Central", item: "50 paires Chaussures Cuir", budget: "Offre à soumettre", status: "Urgent" },
+  { id: 3, type: "Groupage", target: "Mèches & Perruques (Luxe)", progress: 40, remaining: "6 places", savings: "-35%", status: "En cours" },
+];
 
   const topProducts = [
     { id: 1, title: "iPhone 13 Pro Max (Occasion d'Europe)", price: "450,000 XAF", shop: "Nouvelle Ère Tech", badge: "MoMo/OM", image: "📱", label: "Top Vente" },
@@ -151,47 +152,95 @@ export default function Home() {
              </div>
            </section>
 
-          {/* SECTION ECOSYSTÈME LOGISTIQUE & LIVRAISONS */}
-          <section className="space-y-3">
+          {/* SECTION ECOSYSTÈME DEMANDES B2B & GROUPAGES LIVE */}
+            <section className="space-y-3">
             <div className="flex justify-between items-center">
-              <h2 className="text-base font-black text-slate-900 flex items-center gap-1.5">
-                <Truck className="w-4 h-4 text-[#FF6B00]" /> Flux Logistique Live
-              </h2>
+                <h2 className="text-base font-black text-slate-900 flex items-center gap-1.5">
+                <Layers className="w-4 h-4 text-[#FF6B00]" /> Demandes & Groupages Gros
+                </h2>
+                <span className="text-[10px] bg-[#FF6B00]/10 text-[#FF6B00] font-black px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse">
+                Live Cameroun
+                </span>
             </div>
 
-            <div className="space-y-2">
-              {deliveryRequests.map((req) => (
-                <div key={req.id} className="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex justify-between items-center hover:border-slate-200 transition-colors">
-                  <div className="flex items-start gap-2.5">
-                    <div className="bg-slate-100 p-2 rounded-xl text-lg">📦</div>
-                    <div>
-                      <h4 className="text-xs font-bold text-slate-800">{req.package}</h4>
-                      <p className="text-[10px] text-slate-400 font-semibold mt-0.5">De <span className="text-slate-600 font-bold">{req.from}</span> à <span className="text-slate-600 font-bold">{req.to}</span></p>
+            <div className="space-y-2.5">
+                {b2bDemands.map((demand) => (
+                <div key={demand.id} className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:border-slate-200 transition-all">
+                    <div className="flex justify-between items-start gap-2">
+                    <div className="flex items-start gap-2.5">
+                        <div className={`p-2 rounded-xl text-xs font-black shrink-0 ${
+                        demand.type === "Groupage" 
+                            ? "bg-[#0046FF]/10 text-[#0046FF]" 
+                            : "bg-purple-500/10 text-purple-600"
+                        }`}>
+                        {demand.type === "Groupage" ? "📦 GROUP" : "💼 COTE"}
+                        </div>
+                        <div>
+                        <h4 className="text-xs font-black text-slate-800 leading-tight">
+                            {demand.type === "Groupage" ? demand.target : demand.item}
+                        </h4>
+                        <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
+                            {demand.type === "Groupage" ? `Reste : ${demand.remaining}` : demand.user}
+                        </p>
+                        </div>
                     </div>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs font-black text-[#0046FF] block">{req.price}</span>
-                    <span className="text-[8px] bg-slate-100 text-slate-500 font-bold px-1.5 py-0.5 rounded mt-1 inline-block">Prendre</span>
-                  </div>
+                    
+                    <div className="text-right shrink-0">
+                        {demand.type === "Groupage" ? (
+                        <span className="text-xs font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">
+                            {demand.savings}
+                        </span>
+                        ) : (
+                        <span className="text-[9px] bg-rose-500 text-white font-extrabold px-1.5 py-0.5 rounded uppercase tracking-wide">
+                            {demand.status}
+                        </span>
+                        )}
+                    </div>
+                    </div>
+
+                    {/* Barre de progression visuelle uniquement pour les achats groupés */}
+                    {demand.type === "Groupage" && (
+                    <div className="mt-3">
+                        <div className="flex justify-between text-[9px] text-slate-400 font-bold mb-1">
+                        <span>Remplissage</span>
+                        <span className="text-slate-600">{demand.progress}%</span>
+                        </div>
+                        <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
+                        <div 
+                            className="h-full bg-gradient-to-r from-[#0046FF] to-emerald-500" 
+                            style={{ width: `${demand.progress}%` }}
+                        />
+                        </div>
+                    </div>
+                    )}
+
+                    <button 
+                    onClick={() => alert(`Rejoindre ou répondre à l'action ${demand.id}`)}
+                    className="mt-3 w-full bg-slate-50 hover:bg-slate-100 border border-slate-200/40 text-slate-700 text-[11px] font-black py-2 rounded-xl flex items-center justify-center gap-1 transition-colors"
+                    >
+                    {demand.type === "Groupage" ? "Rejoindre le convoi" : "Proposer un prix de gros"}
+                    <ArrowRight className="w-3 h-3" />
+                    </button>
                 </div>
-              ))}
+                ))}
             </div>
 
-            <div className="bg-gradient-to-r from-emerald-500/10 to-teal-500/5 border border-emerald-500/20 rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm">
-              <div className="flex items-center gap-3">
-                <div className="bg-emerald-500 text-white p-2.5 rounded-xl shadow-md">
-                  <Bike className="w-5 h-5" />
+            {/* CTA d'engagement pour les grossistes */}
+            <div className="bg-gradient-to-r from-[#0046FF]/10 to-indigo-500/5 border border-[#0046FF]/20 rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm">
+                <div className="flex items-center gap-3">
+                <div className="bg-[#0046FF] text-white p-2.5 rounded-xl shadow-md">
+                    <SlidersHorizontal className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-black text-slate-800">Rentabilisez vos trajets</h4>
-                  <p className="text-[10px] text-slate-500 font-medium mt-0.5">Devenez coursier indépendant Sell Out et gagnez de l'argent à chaque course urbaine.</p>
+                    <h4 className="text-xs font-black text-slate-800">Un besoin spécifique en volume ?</h4>
+                    <p className="text-[10px] text-slate-500 font-medium mt-0.5"> Lancez un appel d'offres anonyme aux grossistes d'Akwa et Mokolo.</p>
                 </div>
-              </div>
-              <button onClick={() => alert("Inscription livreur")} className="bg-emerald-600 text-white p-2 rounded-xl active:scale-95 transition-transform shrink-0">
-                <ArrowRight className="w-4 h-4" />
-              </button>
+                </div>
+                <button onClick={() => alert("Lancer une demande")} className="bg-[#0046FF] text-white p-2 rounded-xl active:scale-95 transition-transform shrink-0">
+                <PlusCircle className="w-4 h-4" />
+                </button>
             </div>
-          </section>
+            </section>
         </div>
         
         {/* COLONNE GAUCHE : Flux des Ventes, Pubs et Boutiques */}
@@ -337,87 +386,6 @@ export default function Home() {
           <span>NovaVerse Inc.</span>
         </div>
       </section>
-
-      {/* PUBLICITÉ NOVAVERSE */}
-      {/* <AnimatePresence>
-        {showNovaAd && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex flex-col justify-between p-6 max-w-md mx-auto border-x border-slate-800"
-          >
-            <div className="flex justify-between items-center w-full">
-              <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
-                <div className="w-4 h-4 rounded bg-[#0046FF] flex items-center justify-center text-[8px] font-black text-white">N</div>
-                <span className="text-[10px] text-slate-300 font-black tracking-wider uppercase">NovaVerse Ad-Network</span>
-              </div>
-              
-              <button 
-                disabled={!canCloseAd}
-                onClick={() => setShowNovaAd(false)}
-                className={`p-2 rounded-full transition-all ${
-                  canCloseAd ? 'bg-white/10 text-white active:scale-95' : 'bg-white/5 text-slate-600 cursor-not-allowed'
-                }`}
-              >
-                {canCloseAd ? <X className="w-4 h-4" /> : <span className="text-[11px] font-bold px-1">{adCountdown}s</span>}
-              </button>
-            </div>
-
-            <div className="flex flex-col items-center text-center my-auto space-y-6 px-4">
-              <motion.div 
-                initial={{ scale: 0.9, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-                className="w-24 h-24 rounded-3xl bg-gradient-to-tr from-[#0046FF] to-violet-600 flex items-center justify-center text-4xl shadow-2xl shadow-[#0046FF]/30 text-white font-black relative"
-              >
-                N
-                <motion.div 
-                  animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0, 0.3] }}
-                  transition={{ repeat: Infinity, duration: 2 }}
-                  className="absolute inset-0 rounded-3xl border-2 border-[#0046FF]"
-                />
-              </motion.div>
-
-              <div className="space-y-2">
-                <span className="inline-flex items-center gap-1 bg-[#FF6B00]/20 text-[#FF6B00] border border-[#FF6B00]/30 text-[9px] font-black tracking-widest uppercase px-2.5 py-1 rounded-md">
-                  <Sparkles className="w-3 h-3 fill-[#FF6B00]" /> Nouveau Module Live
-                </span>
-                <h2 className="text-2xl font-black text-white tracking-tight leading-tight">
-                  Découvrez <span className="text-[#0046FF]">NovaMap</span>
-                </h2>
-                <p className="text-xs text-slate-400 font-medium leading-relaxed">
-                  Ne restez plus jamais seul. Partagez vos instants éphémères géolocalisés au Cameroun, créez des vibrations réelles et connectez-vous de manière fluide avec vos proches.
-                </p>
-              </div>
-
-              <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                <motion.div 
-                  initial={{ width: "0%" }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 5, ease: "linear" }}
-                  className="h-full bg-gradient-to-r from-[#0046FF] to-[#FF6B00]"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-3 w-full">
-              <button 
-                onClick={() => {
-                  alert("Redirection sécurisée vers NovaMap !");
-                  setShowNovaAd(false);
-                }}
-                className="w-full bg-gradient-to-r from-[#0046FF] to-indigo-600 text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-xl shadow-[#0046FF]/20 transition-transform active:scale-[0.98]"
-              >
-                Explorer NovaMap maintenant
-                <ArrowRight className="w-4 h-4" />
-              </button>
-              <p className="text-[9px] text-center text-slate-500 font-semibold">
-                Protégé par le protocole décentralisé NovaDonnées. Autorisation en un clic.
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence> */}
 
       {/* ========================================================== */}
       {/* 🌌 ENHANCED INTERSTITIEL PUBLICITAIRE : NOVAVERSE FULLSCREEN */}
