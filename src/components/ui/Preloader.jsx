@@ -8,7 +8,7 @@ export default function Preloader({ isLoading }) {
     exit: {
       opacity: 0,
       y: -20,
-      transition: { ease: 'easeInOut', duration: 0.5 }
+      transition: { ease: 'easeInOut', duration: 5 }
     }
   };
 
@@ -30,8 +30,8 @@ export default function Preloader({ isLoading }) {
         <motion.div
           variants={containerVariants}
           exit="exit"
-          className="fixed inset-0 z-50 flex flex-col items-center justify-between max-w-md px-6 py-16 mx-auto shadow-2xl bg-slate-900 border-x border-slate-800"
-        >
+           className="fixed inset-0 z-50 bg-slate-950 flex flex-col items-center justify-between p-8"
+          >
           {/* Background radial gradient subtil pour le côté premium */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,70,255,0.15)_0%,transparent_70%)] pointer-events-none" />
 
