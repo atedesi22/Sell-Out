@@ -1,16 +1,16 @@
-
-
+// src/pages/marketplace/Home.jsx
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, SlidersHorizontal, MapPin, Star, Store, ArrowRight, 
-  Truck, PlusCircle, CheckCircle, Flame, Megaphone, Bike, X, Sparkles, 
+  PlusCircle, CheckCircle, Flame, Megaphone, X, Sparkles, 
   ShieldCheck, ShoppingBag, Layers
 } from 'lucide-react';
 import MainFeed from './MainFeed';
 
-export default function Home() {
-  // --- 1. DATA SIMULÉE (Placée ici pour être accessible partout) ---
+// AJOUT : Récupération de la prop onSelectProduct transmise par App.jsx
+export default function Home({ onSelectProduct }) {
+  // --- 1. DATA SIMULÉE ---
   const adsBanners = [
     { id: 1, title: "Propulsez votre entreprise ici !", subtitle: "Touchez plus de 500 000 acheteurs actifs ce mois au Cameroun.", bg: "bg-gradient-to-r from-[#FF6B00] to-red-600", badge: "Régie Pub B2B", isPromoteCTA: true },
     { id: 2, title: "Arrivages Multi-Boutiques !", subtitle: "Électronique & Mode en direct d'Akwa", bg: "bg-gradient-to-r from-[#0046FF] to-indigo-900", badge: "Sponsorisé", isPromoteCTA: false },
@@ -23,10 +23,10 @@ export default function Home() {
   ];
 
   const b2bDemands = [
-  { id: 1, type: "Groupage", target: "Écrans PC Gamer", progress: 75, remaining: "2 places", savings: "-25%", status: "Presque complet" },
-  { id: 2, type: "Cotation", user: "Grossiste Marché Central", item: "50 paires Chaussures Cuir", budget: "Offre à soumettre", status: "Urgent" },
-  { id: 3, type: "Groupage", target: "Mèches & Perruques (Luxe)", progress: 40, remaining: "6 places", savings: "-35%", status: "En cours" },
-];
+    { id: 1, type: "Groupage", target: "Écrans PC Gamer", progress: 75, remaining: "2 places", savings: "-25%", status: "Presque complet" },
+    { id: 2, type: "Cotation", user: "Grossiste Marché Central", item: "50 paires Chaussures Cuir", budget: "Offre à soumettre", status: "Urgent" },
+    { id: 3, type: "Groupage", target: "Mèches & Perruques (Luxe)", progress: 40, remaining: "6 places", savings: "-35%", status: "En cours" },
+  ];
 
   const topProducts = [
     { id: 1, title: "iPhone 13 Pro Max (Occasion d'Europe)", price: "450,000 XAF", shop: "Nouvelle Ère Tech", badge: "MoMo/OM", image: "📱", label: "Top Vente" },
@@ -57,7 +57,7 @@ export default function Home() {
     return () => clearInterval(adSliderInterval);
   }, [adsBanners.length]);
 
-  // Gestion des Timers : Déclenchement initial à 4s + Relance toutes les 5min (300000ms)
+  // Gestion des Timers : Déclenchement initial à 15s + Relance toutes les 5min
   useEffect(() => {
     const initialTimer = setTimeout(() => {
         setCountdown(12);
@@ -132,7 +132,7 @@ export default function Home() {
        </header>
 
       {/* MULTI-COLUMNS RESPONSIVE GRID */}
-      <div className="grid grid-cols-1 gap-6 px-4 lg:grid-cols-3 md:px-6">
+      <div className="grid grid-cols-1 gap-6 px-4 mt-4 lg:grid-cols-3 md:px-6">
 
         {/* COLONNE DROITE : Actions Métiers, Recrutements, Logistique */}
         <div className="space-y-6">
@@ -154,7 +154,7 @@ export default function Home() {
            </section>
 
           {/* SECTION ECOSYSTÈME DEMANDES B2B & GROUPAGES LIVE */}
-            <section className="space-y-3">
+          <section className="space-y-3">
             <div className="flex items-center justify-between">
                 <h2 className="text-base font-black text-slate-900 flex items-center gap-1.5">
                 <Layers className="w-4 h-4 text-[#FF6B00]" /> Demandes & Groupages Gros
@@ -199,7 +199,6 @@ export default function Home() {
                     </div>
                     </div>
 
-                    {/* Barre de progression visuelle uniquement pour les achats groupés */}
                     {demand.type === "Groupage" && (
                     <div className="mt-3">
                         <div className="flex justify-between text-[9px] text-slate-400 font-bold mb-1">
@@ -226,7 +225,6 @@ export default function Home() {
                 ))}
             </div>
 
-            {/* CTA d'engagement pour les grossistes */}
             <div className="bg-gradient-to-r from-[#0046FF]/10 to-indigo-500/5 border border-[#0046FF]/20 rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm">
                 <div className="flex items-center gap-3">
                 <div className="bg-[#0046FF] text-white p-2.5 rounded-xl shadow-md">
@@ -241,14 +239,14 @@ export default function Home() {
                 <PlusCircle className="w-4 h-4" />
                 </button>
             </div>
-            </section>
+          </section>
         </div>
 
-        {/* COLONNE CENTRALE : LE FLUX PRINCIPAL B2B (Jour 3) */}
-          <main className="order-1 col-span-1 lg:col-span-8 lg:order-1">
-            
-            <MainFeed />
-          </main>
+        {/* COLONNE CENTRALE : LE FLUX PRINCIPAL B2B */}
+        <main className="order-1 col-span-1 lg:col-span-8 lg:order-1">
+          {/* CORRECTION : On relie la prop reçue au composant MainFeed */}
+          <MainFeed onSelectProduct={onSelectProduct}/>
+        </main>
         
         {/* COLONNE GAUCHE : Flux des Ventes, Pubs et Boutiques */}
         <div className="space-y-6 lg:col-span-2">
@@ -405,7 +403,6 @@ export default function Home() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex flex-col justify-between p-6 overflow-y-auto bg-slate-950 lg:p-12"
           >
-            {/* Background spatial abstrait subtil */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,70,255,0.15),transparent_40%)] pointer-events-none" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(255,107,0,0.1),transparent_40%)] pointer-events-none" />
 
@@ -429,7 +426,6 @@ export default function Home() {
 
             {/* Corps Elargi de l'annonce */}
             <div className="relative z-10 flex flex-col items-center w-full max-w-2xl px-4 mx-auto my-auto space-y-8 text-center">
-              {/* Grand Badge NovaVerse Évolutif */}
               <motion.div 
                 initial={{ scale: 0.9, y: 30 }}
                 animate={{ scale: 1, y: 0 }}
@@ -443,7 +439,6 @@ export default function Home() {
                 />
               </motion.div>
 
-              {/* Textes et Arguments Élargis */}
               <div className="space-y-4">
                 <span className="inline-flex items-center gap-1.5 bg-[#FF6B00]/10 text-[#FF6B00] border border-[#FF6B00]/20 text-[10px] font-black tracking-widest uppercase px-3 py-1 rounded-full backdrop-blur-sm">
                   <Sparkles className="w-3.5 h-3.5 fill-[#FF6B00]" /> Déploiement Écosystème
@@ -458,7 +453,6 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Grille des fonctionnalités clefs intégrées à la pub */}
               <div className="grid w-full max-w-md grid-cols-3 gap-3 pt-2">
                 <div className="flex flex-col items-center p-3 border bg-white/5 border-white/5 rounded-2xl">
                   <ShoppingBag className="w-5 h-5 text-[#0046FF] mb-1" />
@@ -474,7 +468,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Barre de Progression Linéaire synchronisée */}
               <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden max-w-md">
                 <motion.div 
                   initial={{ width: "0%" }}
